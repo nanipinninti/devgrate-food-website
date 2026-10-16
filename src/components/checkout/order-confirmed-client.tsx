@@ -230,7 +230,7 @@ export function OrderConfirmedClient() {
         transition={{ delay: 1.5, duration: 0.4 }}
         className="flex flex-col sm:flex-row gap-3 justify-center mt-8"
       >
-        <Link href="/track-order">
+        <Link href={`/track-order?id=${latestOrder.id}`}>
           <VintageButton size="lg">
             <Package className="inline h-4 w-4 mr-2" strokeWidth={1.5} />
             Track Your Order
