@@ -1,17 +1,16 @@
 import type { Metadata } from 'next';
-import { PageTransition } from '@/components/ui/page-transition';
 import { ContactClient } from '@/components/contact/contact-client';
 import { site } from '@/data/site';
+import { siteConfig } from '@/lib/siteConfig';
 
 export const metadata: Metadata = {
-  title: 'Contact — Hearth & Ember',
+  title: 'Contact',
   description:
     'Get in touch with Hearth & Ember. Call, email, or write to us. Check if we deliver to your area and find answers to common questions.',
   openGraph: {
-    title: 'Contact — Hearth & Ember',
+    title: 'Contact | Hearth & Ember',
     description:
       'Get in touch with Hearth & Ember. Call, email, or write to us. Check delivery zones and FAQs.',
-    type: 'website',
   },
 };
 
@@ -56,30 +55,31 @@ const localBusinessJsonLd = {
   },
   openingHoursSpecification: site.hours.map((h) => {
     const dayMap: Record<string, string> = {
-      Monday: 'Mo',
-      Tuesday: 'Tu',
-      Wednesday: 'We',
-      Thursday: 'Th',
-      Friday: 'Fr',
-      Saturday: 'Sa',
-      Sunday: 'Su',
+      Monday: 'Mo', Tuesday: 'Tu', Wednesday: 'We', Thursday: 'Th',
+      Friday: 'Fr', Saturday: 'Sa', Sunday: 'Su',
     };
-    const timeMatch = h.time.match(/(\d+:\d+\s*[AP]M)\s*[–-]\s*(\d+:\d+\s*[AP]M)/i);
+    const timeMatch = h.time.match(/(\d+):(\d+)\s*(AM|PM)\s*[–-]\s*(\d+):(\d+)\s*(AM|PM)/i);
+    const to24 = (hh: string, mm: string, ap: string) => {
+      let hr = parseInt(hh);
+      if (ap.toUpperCase() === 'PM' && hr !== 12) hr += 12;
+      if (ap.toUpperCase() === 'AM' && hr === 12) hr = 0;
+      return `${String(hr).padStart(2, '0')}:${mm}`;
+    };
     return {
       '@type': 'OpeningHoursSpecification',
       dayOfWeek: dayMap[h.day] || h.day,
-      opens: timeMatch ? timeMatch[1].replace(/\s/g, '').toUpperCase() : '11:00',
-      closes: timeMatch ? timeMatch[2].replace(/\s/g, '').toUpperCase() : '22:30',
+      opens: timeMatch ? to24(timeMatch[1], timeMatch[2], timeMatch[3]) : '11:00',
+      closes: timeMatch ? to24(timeMatch[4], timeMatch[5], timeMatch[6]) : '22:30',
     };
   }),
   servesCuisine: 'Indian',
   priceRange: '₹₹',
-  url: 'https://hearthandember.in',
+  url: siteConfig.url,
 };
 
 export default function ContactPage() {
   return (
-    <PageTransition>
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
@@ -89,6 +89,6 @@ export default function ContactPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
       <ContactClient />
-    </PageTransition>
+    </>
   );
 }

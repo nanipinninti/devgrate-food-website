@@ -17,7 +17,7 @@ const NAV_LINKS = [
   { label: 'Home', href: '/' },
   { label: 'Menu', href: '/menu' },
   { label: 'Our Story', href: '/our-story' },
-  { label: 'Track Order', href: '/track' },
+  { label: 'Track Order', href: '/track-order' },
   { label: 'Contact', href: '/contact' },
 ];
 

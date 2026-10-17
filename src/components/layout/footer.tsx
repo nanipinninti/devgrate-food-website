@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import {
@@ -25,8 +25,7 @@ const QUICK_LINKS = [
   { label: 'Home', href: '/' },
   { label: 'Full Menu', href: '/menu' },
   { label: 'Our Story', href: '/our-story' },
-  { label: 'Track Order', href: '/track' },
-  { label: 'Offers', href: '/offers' },
+  { label: 'Track Order', href: '/track-order' },
   { label: 'Contact', href: '/contact' },
 ];
 
@@ -39,6 +38,11 @@ const SOCIAL_ICONS = [
 export function Footer() {
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
+  const [currentYear, setCurrentYear] = useState('2025');
+
+  useEffect(() => {
+    setCurrentYear(String(new Date().getFullYear()));
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -272,7 +276,7 @@ export function Footer() {
                   </svg>
                 </span>
                 <p className="font-elite text-[10px] uppercase tracking-wider text-sepia">
-                  © 1924–2025 {site.name}. All rights reserved.
+                  © 1924–{currentYear} {site.name}. All rights reserved.
                 </p>
               </div>
               <button

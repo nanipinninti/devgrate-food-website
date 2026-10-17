@@ -1,12 +1,11 @@
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
-import { PageTransition } from '@/components/ui/page-transition';
 import { MenuHeader } from '@/components/menu/menu-header';
 import { MenuClient } from '@/components/menu/menu-client';
 import { FloatingCartPill } from '@/components/menu/floating-cart-pill';
 
 export const metadata: Metadata = {
-  title: 'Menu — Hearth & Ember',
+  title: 'Menu',
   description:
     'Browse the full bill of fare at Hearth & Ember — starters, mains, biryani, desserts, and beverages. Every dish cooked to order over open fire, never reheated.',
 };
@@ -21,12 +20,12 @@ function MenuFallback() {
 
 export default function MenuPage() {
   return (
-    <PageTransition>
+    <>
       <MenuHeader />
       <Suspense fallback={<MenuFallback />}>
         <MenuClient />
       </Suspense>
       <FloatingCartPill />
-    </PageTransition>
+    </>
   );
 }

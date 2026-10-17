@@ -33,8 +33,8 @@ const config: Config = {
         ink: '#2B1D14',
         oxblood: '#7A1F1F',
         forest: '#2F4A3A',
-        brass: '#B08A3E',
-        sepia: '#8B6B4A',
+        brass: '#9E7A32',
+        sepia: '#6B5238',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
